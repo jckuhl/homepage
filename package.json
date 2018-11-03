@@ -15,7 +15,8 @@
     "dotenv": "^6.1.0",
     "dotenv-webpack": "^1.5.7",
     "express": "^4.16.4",
-    "vue": "^2.5.17"
+    "vue": "^2.5.17",
+    "vue-router": "^3.0.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "^3.0.3",

@@ -1,21 +1,19 @@
 <template>
     <div id="app">
-        <Clock />
-        <Weather />
+        <Menu />
+        <router-view />
     </div>
 </template>
 
 <script>
-import Clock from './components/Clock';
-import Weather from './components/Weather';
+import Menu from './Menu';
 
 export default {
-  name: 'app',
-      components: {
-          Clock,
-          Weather
-      }
-  }
+    name: 'app',
+    components: {
+        Menu
+    }
+} 
 </script>
 
 <style>

@@ -1,3 +1,7 @@
+/**
+ * Simple server for grabbing API keys from
+ */
+
 const express = require('express');
 const bodyparser = require('body-parser');
 const cors = require('cors');
@@ -8,7 +12,7 @@ app.use(cors());
 
 const port = 8000;
 
-const api = { key: process.env.WX_API }
+const api = { wx: process.env.WX_API }
 
 app.listen(port, ()=> console.log(`Listening on port ${port}`));
 
