@@ -3,6 +3,9 @@
         <div class="clock">
             {{ time }}
         </div>
+        <div>
+            <h1>{{ date }}</h1>
+        </div>
     </div>
 </template>
 
@@ -13,13 +16,15 @@ export default {
     name: 'Clock',
     data() {
         return {
-            time: 0
+            time: '',
+            date: '',
         }
     },
     methods: {
         startClock() {
             setInterval(()=> {
                 this.time = format(new Date(), 'hh:mm:ss');
+                this.date = format(new Date(), 'dddd, MMMM D, YYYY');
             }, 500);
         }
     },

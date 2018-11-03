@@ -32,18 +32,30 @@ export default {
             wxLoaded: false
         }
     },
-    async created() {
-        let weather = JSON.parse(localStorage.getItem('weather'));
+    methods: {
+        setWeather: async function() {
+            let weather = JSON.parse(sessionStorage.getItem('weather'));
 
-        //if weather is not in local storage or if weather in local storage is older than 30 minutes
-        if(!weather || differenceInMinutes(new Date(), new Date(weather.dt)) > 30) {
-            this.weather = await Weather.getLocalWeather();
-            localStorage.setItem('weather', JSON.stringify(this.weather));
-            this.wxLoaded = true;
-        } else {
-            this.weather = weather;
-            this.wxLoaded = true;
+            //if weather is not in local storage or if weather in session storage is older than 5 minutes
+            if(!weather || differenceInMinutes(new Date(), new Date(weather.dt)) > 5) {
+                this.weather = await Weather.getLocalWeather();
+                sessionStorage.setItem('weather', JSON.stringify(this.weather));
+                this.wxLoaded = true;
+            } else {
+                this.weather = weather;
+                this.wxLoaded = true;
+            }
+        },
+        /**
+         * Grab the weather, and update it every five minutes (300,000 ms)
+         */
+        updateWeather() {
+            this.setWeather();
+            setTimeout(this.setWeather.bind(this), 300001);
         }
+    },
+    created() {
+        this.updateWeather();
     }
 }
 </script>
