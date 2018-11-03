@@ -20,6 +20,7 @@
 <script>
 import Weather from './../models/weather.js';
 import WxIcon from './WxIcon';
+import { differenceInMinutes } from 'date-fns';
 
 export default {
     components: {
@@ -32,8 +33,17 @@ export default {
         }
     },
     async created() {
-        this.weather = await Weather.getLocalWeather();
-        this.wxLoaded = true;
+        let weather = JSON.parse(localStorage.getItem('weather'));
+
+        //if weather is not in local storage or if weather in local storage is older than 30 minutes
+        if(!weather || differenceInMinutes(new Date(), new Date(weather.dt)) > 30) {
+            this.weather = await Weather.getLocalWeather();
+            localStorage.setItem('weather', JSON.stringify(this.weather));
+            this.wxLoaded = true;
+        } else {
+            this.weather = weather;
+            this.wxLoaded = true;
+        }
     }
 }
 </script>

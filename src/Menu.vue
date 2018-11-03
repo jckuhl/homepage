@@ -1,8 +1,11 @@
 <template>
     <div>
         <ul>
-            <li v-for="menuItem of menuItems">
+            <!-- The menu won't be reordered so index will do for key -->
+            <li v-for="(menuItem, index) of menuItems" :key="index">
+                <router-link :to="menuItem.route">
                 {{ menuItem.name }}
+                </router-link>
             </li>
         </ul>
     </div>
@@ -12,8 +15,20 @@
 
 const menuItems = [
     {
-        name: 'home',
+        name: 'Home',
         route: '/'
+    },
+    {
+        name: 'Reddit',
+        route: '/reddit'
+    },
+    {
+        name: 'Facebook',
+        route: '/fb'
+    },
+    {
+        name: 'Instagram',
+        route: '/instagram'
     }
 ]
 
