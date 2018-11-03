@@ -10,6 +10,11 @@ npm install
 npm run serve
 ```
 
+### Run proxy server to grab api keys frome environment
+```
+npm run server
+```
+
 ### Compiles and minifies for production
 ```
 npm run build
