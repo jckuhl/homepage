@@ -1,4 +1,4 @@
-class GeoError extends Error {
+export class GeoError extends Error {
     constructor(message) {
         super(message);
     }

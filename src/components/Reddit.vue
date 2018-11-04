@@ -1,7 +1,9 @@
 <template>
     <div>
         Reddit
-        <reddit-post v-for="post of reddit" :post="post" :key="post.data.id" />
+        <div v-for="(subreddit, index) of reddit" :key="index">
+            <reddit-post v-for="post of subreddit" :post="post" :key="post.data.id" />
+        </div>
     </div>
 </template>
 
@@ -16,11 +18,16 @@ export default {
     data() {
         return {
             reddit: {},
+            subreddits: [],
             postsPerReddit: 10
         }
     },
     async created() {
-        this.reddit = (await Reddit.getRedditPosts('learnjavascript')).data.children.slice(this.postsPerReddit);
+        this.subreddits = await Reddit.getSubscribedSubs();
+        this.reddit = (await Promise
+                            .all(this.subreddits.map(sub => Reddit.getRedditPosts(sub)))
+                            .then(sub => sub))
+                            .map(sub => sub.data.children);
     }
 }
 </script>

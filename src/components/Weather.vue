@@ -29,7 +29,8 @@ export default {
     data() {
         return {
             weather: Weather,
-            wxLoaded: false
+            wxLoaded: false,
+            history: []
         }
     },
     methods: {
@@ -45,6 +46,7 @@ export default {
                 this.weather = weather;
                 this.wxLoaded = true;
             }
+            this.history.push(this.weather);
         },
         /**
          * Grab the weather, and update it every five minutes (300,000 ms)
