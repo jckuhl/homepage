@@ -22,20 +22,28 @@ export default {
         url() {
             return this.BASE_URL + this.post.data.permalink
         },
+
+        /**
+         * Parses the post.data.selftext_html, if it exists, into workable HTML
+         */
         postHtml() {
             let html = this.post.data.selftext_html;
 
             // necessary regex to allow HTML to parse tags and special characters
+            // zeroth element is the regex, first element is what replaces its matches.
             const REGEXP = [
                 [ /(&lt;)/gui, '<'],
                 [ /(&gt;)/gui, '>'],
                 [ /(&amp;)/gui, '&'],
                 [ /(\\n)/gui, '<br>']
             ]
+
             if(html) {
                 REGEXP.forEach(regex=> html = html.replace(regex[0], regex[1]));
                 return html;
             }
+
+            //if post.data.selftext_html doesn't exist, return the non-html version which is usually ""
             return this.post.data.selftext;
         },
         subredditURL() {
