@@ -9,7 +9,9 @@
                     <wx-icon :icon="wx.icon" :alt="wx.description" />
                 </li>
             </ul>
-            {{ weather }}
+
+            <p>Temp: {{ weather.main.temp | fromKelvinTo('farenheit') }} 
+                /  {{ weather.main.temp | fromKelvinTo('celsius') }}</p>
         </div>
         <div v-else>
             <h3>Please wait, your weather is loading</h3>
@@ -30,7 +32,6 @@ export default {
         return {
             weather: Weather,
             wxLoaded: false,
-            history: []
         }
     },
     methods: {
@@ -46,7 +47,6 @@ export default {
                 this.weather = weather;
                 this.wxLoaded = true;
             }
-            this.history.push(this.weather);
         },
         /**
          * Grab the weather, and update it every five minutes (300,000 ms)
@@ -54,6 +54,17 @@ export default {
         updateWeather() {
             this.setWeather();
             setTimeout(this.setWeather.bind(this), 300001);
+        }
+    },
+    filters: {
+        fromKelvinTo(value, degree) {
+            const cToF = c => (c * 9/5) + 32;
+
+            let temp = parseFloat(value) - 273.15;
+            if(degree === 'farenheit') {
+                return cToF(temp).toFixed(2) + ' °F';
+            }
+            return temp.toFixed(2) + ' °C';
         }
     },
     created() {
