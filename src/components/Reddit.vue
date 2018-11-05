@@ -18,7 +18,7 @@ export default {
         return {
             reddit: {},
             subreddits: [],
-            postsPerReddit: 10
+            postsPerReddit: 25
         }
     },
     async created() {
@@ -35,7 +35,8 @@ export default {
                             .reduce((subreddits, subreddit)=> subreddits.concat(subreddit), [])
 
                             // and sort by date
-                            .sort((postA, postB)=> postA.data.created_utc - postB.data.created_utc);
+                            .sort((postA, postB)=> postA.data.created_utc - postB.data.created_utc)
+                            .slice(0,this.postsPerReddit);
     }
 }
 </script>

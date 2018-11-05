@@ -24,14 +24,31 @@ export default {
         },
         postHtml() {
             let html = this.post.data.selftext_html;
+
+            // necessary regex to allow HTML to parse tags and special characters
+            const REGEXP = [
+                [ /(&lt;)/gui, '<'],
+                [ /(&gt;)/gui, '>'],
+                [ /(&amp;)/gui, '&'],
+                [ /(\\n)/gui, '<br>']
+            ]
             if(html) {
-                return html.replace(/(&lt;)/g, '<').replace(/(&gt;)/g, '>');
+                REGEXP.forEach(regex=> html = html.replace(regex[0], regex[1]));
+                return html;
             }
             return this.post.data.selftext;
         },
         subredditURL() {
             return this.BASE_URL + this.post.data.subreddit_name_prefixed;
         }
+    },
+    filters: {
+        derp(string) {
+            return '¯\_(ツ)_/¯ '
+        }
     }
 }
 </script>
+
+<style>
+</style>
