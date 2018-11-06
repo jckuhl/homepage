@@ -12,11 +12,20 @@ app.use(cors());
 
 const port = 8000;
 
-const api = { wx: process.env.WX_API }
+const api = { 
+    wx: process.env.WX_API,
+    twit: process.env.TWIT_API,
+    fb: process.env.FB_API
+}
 
 app.listen(port, ()=> console.log(`Listening on port ${port}`));
 
-app.get('/', (request, response)=> {
-    response.send(api);
-    response.end();
+app.get('/:key', (request, response)=> {
+    const key = request.params.key;
+    if(Object.getOwnPropertyNames(api).includes(key)) {
+        response.send(JSON.stringify(api[key]));
+        response.end();
+    } else {
+        response.sendStatus(404);
+    }  
 });

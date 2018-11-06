@@ -8,7 +8,6 @@
 <script>
 import RedditPost from './RedditPost';
 import Reddit from './../models/reddit.js';
-import compareAsc from 'date-fns';
 
 export default {
     components: {
